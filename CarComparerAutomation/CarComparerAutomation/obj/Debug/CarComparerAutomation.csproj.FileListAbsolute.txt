@@ -1,0 +1,16 @@
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\obj\Debug\CarComparerAutomation.csprojAssemblyReference.cache
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\bin\Debug\CarComparerAutomation.dll
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\bin\Debug\CarComparerAutomation.pdb
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\bin\Debug\SeleniumExtras.WaitHelpers.dll
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\bin\Debug\WebDriver.dll
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\bin\Debug\WebDriver.xml
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\obj\Debug\CarComparerAutomation.csproj.CopyComplete
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\obj\Debug\CarComparerAutomation.dll
+C:\Users\silvia-ana-maria\source\repos\CarComparerAutomation\CarComparerAutomation\obj\Debug\CarComparerAutomation.pdb
