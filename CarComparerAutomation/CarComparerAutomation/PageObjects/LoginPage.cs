@@ -1,7 +1,8 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-//using WaitHelpers.ExpectedConditions;
+using SeleniumExtras.WaitHelpers;
+using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
 
 namespace CarComparerAutomation.PageObjects
 {
@@ -15,7 +16,7 @@ namespace CarComparerAutomation.PageObjects
             driver = browser;
         }
 
-        private By username = By.Id("session_email");
+        private By username = By.CssSelector("input[name='username']");
         private IWebElement TxtUsername()
         {
             return driver.FindElement(By.CssSelector("input[name='username']"));
@@ -35,6 +36,8 @@ namespace CarComparerAutomation.PageObjects
         //{
         //    SiteMenu.NavigateToLoginPage();
         //}
+
+        private By new_username = By.Id("SignupUsername");
 
         private IWebElement TxtRegisterUsername()
         {
@@ -58,7 +61,12 @@ namespace CarComparerAutomation.PageObjects
 
         private IWebElement BtnSignup()
         {
-            return driver.FindElement(By.CssSelector("button[type = 'signup']"));
+            return driver.FindElement(By.CssSelector("p.create_account"));
+        }
+
+        private IWebElement ConfirmSignup()
+        {
+            return driver.FindElement(By.ClassName("creeaza_cont"));
         }
 
         public void LoginApplication(string username, string password)
@@ -70,12 +78,14 @@ namespace CarComparerAutomation.PageObjects
 
         public void RegisterUser(string username, string email, string password, string confirmPassword)
         {
+            BtnSignup().Click();
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
+            wait.Until(ExpectedConditions.ElementIsVisible(new_username));
             TxtRegisterUsername().SendKeys(username);
             TxtEmail().SendKeys(email);
             TxtRegisterPassword().SendKeys(password);
             TxtConfirmPassword().SendKeys(confirmPassword);
-            BtnSignup().Click();
+            ConfirmSignup().Click();
         }
-
     }
 }

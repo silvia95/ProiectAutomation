@@ -2,6 +2,7 @@
 using System;
 using SeleniumExtras.WaitHelpers;
 using OpenQA.Selenium.Support.UI;
+using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
 
 namespace CarComparerAutomation.PageObjects
 {

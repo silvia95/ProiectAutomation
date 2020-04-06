@@ -35,16 +35,15 @@ namespace CarComparerAutomation
             
         }
 
-        //[TestMethod]
-        //public void SignUp()
-        //{
-        //    loginPage.RegisterUser(username, email, password, confirmPassword);
+        [TestMethod]
+        public void Positive_Signup()
+        {
+            loginPage.RegisterUser("test", "test@test.test", "123456", "123456");
 
-        //    var expectedResult = "Logout";
-        //    var homepage = new HomePage(driver);
-        //    Assert.AreEqual(expectedresult, homepage.existsBtnLogout());
-
-        // }
+            var expectedresult = "Logout";
+            var homepage = new HomePage(driver);
+            Assert.AreEqual(expectedresult, homepage.existsBtnLogout());
+        }
 
         [TestCleanup]
         public void CleanUp()
