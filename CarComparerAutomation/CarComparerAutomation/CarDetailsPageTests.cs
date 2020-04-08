@@ -2,12 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace CarComparerAutomation
 {
@@ -44,11 +40,64 @@ namespace CarComparerAutomation
         public void Add_Car()
         {
             carDetailsPage.goToDetailsPage();
-            carDetailsPage.AddElement_First();
+            carDetailsPage.AddElement();
 
             string text = driver.SwitchTo().Alert().Text;
 
             Assert.IsTrue(text.Contains("Mașină adăugată."));
+        }
+
+        [TestMethod]
+        public void Edit_Car()
+        {
+            carDetailsPage.goToDetailsPage();
+            carDetailsPage.goToEditElement();
+            carDetailsPage.EditElement();
+
+            string text = driver.SwitchTo().Alert().Text;
+
+            Assert.IsTrue(text.Contains("Editare efectuată."));
+        }
+
+        [TestMethod]
+        public void Check_Permissions()
+        {
+            bool element_present = true;
+            carDetailsPage.goToDetailsPage();
+            carDetailsPage.Check_Admin_Rights();
+            if (carDetailsPage.Element_Exist())
+            {
+                carDetailsPage.user_logout();
+                setupLogin.LoginApplication("test", "123456");
+                carDetailsPage.goToDetailsPage();
+                carDetailsPage.Check_Admin_Rights();
+                if (carDetailsPage.Element_Exist())
+                {
+                    element_present = false;
+                }
+            }
+            else
+            {
+                element_present = false;
+            }
+
+            Assert.IsTrue(element_present);
+        }
+
+        [TestMethod]
+        public void Download_PDF ()
+        {
+            carDetailsPage.goToDetailsPage();
+
+            String DownloadFolder = @"c:\temp\";
+            var options = new ChromeOptions();
+            options.AddUserProfilePreference("download.default_directory", DownloadFolder);
+            driver = new ChromeDriver(options);
+
+            carDetailsPage.Download_Car_Details();
+
+            System.Threading.Thread.Sleep(10000);
+            Assert.IsTrue(File.Exists(@"c:\temp\Lista_masini.pdf"));
         }
 
         [TestCleanup]
