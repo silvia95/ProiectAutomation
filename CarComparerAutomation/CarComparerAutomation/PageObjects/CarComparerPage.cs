@@ -91,6 +91,17 @@ namespace CarComparerAutomation.PageObjects
             select_model_2.SelectByText(s_model_2);
         }
 
+        public void FailedCompareCars(string s_clasa_1, string s_clasa_2)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            wait.Until(ExpectedConditions.ElementIsVisible(car_selector_container));
+            var select_class_1 = new SelectElement(clasa_1);
+            select_class_1.SelectByText(s_clasa_1);
+            var select_class_2 = new SelectElement(clasa_2);
+            select_class_2.SelectByText(s_clasa_2);
+        }
+
+
         public void CompareCars()
         {
             BtnComparaMasini().Click();

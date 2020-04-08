@@ -45,7 +45,28 @@ namespace CarComparerAutomation
             wait.Until(ExpectedConditions.ElementIsVisible(table_compare));
 
             Assert.IsTrue(carComparerPage.isVisibleComparer());
+
+
         }
+
+        [TestMethod]
+        public void Negative_Compare_Cars()
+        {
+            carComparerPage.goToComparator();
+
+            carComparerPage.FailedCompareCars("Sport", "Lux");
+
+            carComparerPage.CompareCars();
+
+            var table_compare = carComparerPage.getComparer_Table();
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
+
+            string text = driver.SwitchTo().Alert().Text;
+
+            Assert.IsTrue(text.Contains("Alegeți ambele mașini pentru a compara!"));
+        }
+
+
 
         [TestCleanup]
         public void CleanUp()
