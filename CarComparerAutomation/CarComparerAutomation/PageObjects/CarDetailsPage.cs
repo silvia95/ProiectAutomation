@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
 
 
@@ -15,9 +16,9 @@ namespace CarComparerAutomation.PageObjects
             driver = browser;
         }
 
-        private IWebElement buttonToList => driver.FindElement(By.ClassName("brnComparator"));
+        private IWebElement buttonToList => driver.FindElement(By.Id("link_to_masini"));
 
-        private By buttonToList_by = By.ClassName("brnComparator");
+        private By buttonToList_by = By.Id("link_to_masini");
         public void goToDetailsPage()
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
@@ -38,6 +39,7 @@ namespace CarComparerAutomation.PageObjects
         private By btnEdit_by = By.ClassName("edit_model");
 
         private IList<IWebElement> LstCars => driver.FindElements(By.CssSelector("#DataTables_Table_0 tbody tr"));
+        
 
         public void DeleteElement()
         {
@@ -124,8 +126,7 @@ namespace CarComparerAutomation.PageObjects
         //elemente pentru download
         private IWebElement btnDownloadPDF => driver.FindElement(By.ClassName("buttons-pdf"));
 
-        //elemente pentru check permissions
-        private IWebElement btnLogOut => driver.FindElement(By.ClassName("logout-button"));
+        
 
         public void AddElement()
         {
@@ -295,6 +296,28 @@ namespace CarComparerAutomation.PageObjects
             btnDownloadPDF.Click();
         }
 
+        public bool CheckFileDownloaded(string filename)
+        {
+            bool exist = false;
+            string Path = System.Environment.GetEnvironmentVariable("USERPROFILE") + "\\Downloads";
+            string[] filePaths = Directory.GetFiles(Path);
+            foreach (string p in filePaths)
+            {
+                if (p.Contains(filename))
+                {
+                    FileInfo thisFile = new FileInfo(p);
+                    if (thisFile.LastWriteTime.ToShortTimeString() == DateTime.Now.ToShortTimeString() ||
+                    thisFile.LastWriteTime.AddMinutes(1).ToShortTimeString() == DateTime.Now.ToShortTimeString())
+                    {
+                        exist = true;
+                    }
+                    File.Delete(p);
+                    break;
+                }
+            }
+            return exist;
+        }
+
         public bool Element_Exist()
         {
             return btnAdd.Displayed;
@@ -304,11 +327,6 @@ namespace CarComparerAutomation.PageObjects
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             wait.Until(ExpectedConditions.ElementIsVisible(btnAdd_by));
-        }
-
-        public void user_logout()
-        {
-            btnLogOut.Click();
         }
 
 

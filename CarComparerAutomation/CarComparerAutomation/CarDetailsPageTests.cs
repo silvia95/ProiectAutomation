@@ -67,11 +67,10 @@ namespace CarComparerAutomation
             carDetailsPage.Check_Admin_Rights();
             if (carDetailsPage.Element_Exist())
             {
-                carDetailsPage.user_logout();
+                setupLogin.user_logout();
                 setupLogin.LoginApplication("test", "123456");
                 carDetailsPage.goToDetailsPage();
-                carDetailsPage.Check_Admin_Rights();
-                if (carDetailsPage.Element_Exist())
+                if (!carDetailsPage.Element_Exist())
                 {
                     element_present = false;
                 }
@@ -81,23 +80,17 @@ namespace CarComparerAutomation
                 element_present = false;
             }
 
-            Assert.IsTrue(element_present);
+            Assert.AreEqual(false, element_present);
         }
 
         [TestMethod]
         public void Download_PDF ()
         {
             carDetailsPage.goToDetailsPage();
-
-            String DownloadFolder = @"c:\temp\";
-            var options = new ChromeOptions();
-            options.AddUserProfilePreference("download.default_directory", DownloadFolder);
-            driver = new ChromeDriver(options);
-
             carDetailsPage.Download_Car_Details();
 
-            System.Threading.Thread.Sleep(10000);
-            Assert.IsTrue(File.Exists(@"c:\temp\Lista_masini.pdf"));
+            System.Threading.Thread.Sleep(5000);
+            Assert.AreEqual(true, carDetailsPage.CheckFileDownloaded("Lista_masini"));
         }
 
         [TestCleanup]

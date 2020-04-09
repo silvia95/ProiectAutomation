@@ -69,9 +69,18 @@ namespace CarComparerAutomation.PageObjects
             return driver.FindElement(By.ClassName("creeaza_cont"));
         }
 
-        public void LoginApplication(string username, string password)
+        private By login_form_by => By.Id("login_form");
+
+        //elemente pentru check permissions
+        private IWebElement btnLogOut => driver.FindElement(By.ClassName("logout-button"));
+
+        public void LoginApplication(string user, string password)
         {
-            TxtUsername().SendKeys(username);
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
+            wait.Until(ExpectedConditions.ElementIsVisible(username));
+            TxtUsername().Click();
+            TxtUsername().SendKeys(user);
+            TxtPassword().Click();
             TxtPassword().SendKeys(password);
             BtnLogin().Click();
         }
@@ -86,6 +95,13 @@ namespace CarComparerAutomation.PageObjects
             TxtRegisterPassword().SendKeys(password);
             TxtConfirmPassword().SendKeys(confirmPassword);
             ConfirmSignup().Click();
+        }
+
+        public void user_logout()
+        {
+            btnLogOut.Click();
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            wait.Until(ExpectedConditions.ElementIsVisible(login_form_by));
         }
     }
 }
