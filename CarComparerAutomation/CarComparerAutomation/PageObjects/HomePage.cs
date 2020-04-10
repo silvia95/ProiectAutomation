@@ -10,7 +10,11 @@ namespace CarComparerAutomation.PageObjects
     public class HomePage
     {
         private IWebDriver driver;
-        //public SiteMenu menuItemControl => new LoggedInMenuItemControl(driver);
+
+        public HomePage(IWebDriver browser)
+        {
+            this.driver = browser;
+        }
 
         //elemente pentru poza de profil
         private IWebElement btnSettings => driver.FindElement(By.ClassName("upload_photo"));
@@ -25,28 +29,7 @@ namespace CarComparerAutomation.PageObjects
         private By Modal_by = By.Id("modal_adauga_poza");
 
         private By Container_by = By.Id("control_main");
-
-        public HomePage(IWebDriver browser)
-        {
-            this.driver = browser;
-            //Explicit Wait
-            //var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
-            //wait.Until(ExpectedConditions.ElementIsVisible(btnLogout));
-        }
-
         private By btnLogout => By.ClassName("logout-button");
-
-        public string existsBtnComparrer()
-        {
-            var BtnComparrerName = driver.FindElement(By.Id("link_to_comparator")).Text;
-            return BtnComparrerName;
-        }
-
-        public string existsBtnLogout()
-        {
-            var BtnLogoutName = driver.FindElement(By.ClassName("logout-button")).Text;
-            return BtnLogoutName;
-        }
 
         public void Add_Profile_Picture()
         {
@@ -66,6 +49,19 @@ namespace CarComparerAutomation.PageObjects
         public bool Paragraph_Displayed()
         {
             return Paragraph.Displayed;
+        }
+
+        //metode Home Page
+        public string existsBtnComparrer()
+        {
+            var BtnComparrerName = driver.FindElement(By.Id("link_to_comparator")).Text;
+            return BtnComparrerName;
+        }
+
+        public string existsBtnLogout()
+        {
+            var BtnLogoutName = driver.FindElement(By.ClassName("logout-button")).Text;
+            return BtnLogoutName;
         }
     }
 }

@@ -65,10 +65,9 @@
     <Compile Include="HomePageTests.cs" />
     <Compile Include="LoginPageTests.cs" />
     <Compile Include="PageObjects\CarComparerPage.cs" />
-    <Compile Include="PageObjects\BuisnessObject\CarComparrerBO.cs" />
+    <Compile Include="PageObjects\BuisnessObject\CarComparerBO.cs" />
     <Compile Include="PageObjects\CarDetailsPage.cs" />
     <Compile Include="PageObjects\BuisnessObject\CarDetailsBO.cs" />
-    <Compile Include="PageObjects\BuisnessObject\HomePageBO.cs" />
     <Compile Include="PageObjects\Controllers\SiteMenu.cs" />
     <Compile Include="PageObjects\HomePage.cs" />
     <Compile Include="PageObjects\BuisnessObject\LoginBO.cs" />

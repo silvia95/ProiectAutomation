@@ -26,7 +26,7 @@ namespace CarComparerAutomation
         [TestMethod]
         public void Positive_Login()
         {
-            loginPage.LoginApplication("admin", "123456");
+            loginPage.LoginApplication(new LoginBO());
 
             var expectedresult = "Comparator";
             var homepage = new HomePage(driver);
@@ -38,7 +38,7 @@ namespace CarComparerAutomation
         [TestMethod]
         public void Positive_Signup()
         {
-            loginPage.RegisterUser("test", "test@test.test", "123456", "123456");
+            loginPage.RegisterUser(new LoginBO());
 
             var expectedresult = "Logout";
             var homepage = new HomePage(driver);

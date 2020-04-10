@@ -17,8 +17,8 @@ namespace CarComparerAutomation.PageObjects.Controllers
 
         public class LoggedInMenuItemControl : SiteMenu
         {
-            private By comparrer = By.CssSelector("");
-            private IWebElement BtnComparrer => driver.FindElement(comparrer);
+            private By comparer = By.ClassName("btnComparator");
+            private IWebElement BtnComparrer => driver.FindElement(comparer);
 
             private By carList = By.CssSelector("a[href='masini']");
             private IWebElement BtnCarList => driver.FindElement(carList);
@@ -28,6 +28,7 @@ namespace CarComparerAutomation.PageObjects.Controllers
 
             public LoggedInMenuItemControl(IWebDriver browser) : base(browser)
             {
+
             }
 
         }

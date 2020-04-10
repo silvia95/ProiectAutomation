@@ -24,7 +24,7 @@ namespace CarComparerAutomation
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl("http://andrei.webdesign-iasi.ro/");
             setupLogin = new LoginPage(driver);
-            setupLogin.LoginApplication("admin", "123456");
+            setupLogin.LoginApplication(new LoginBO());
         }
 
         [TestMethod]
@@ -32,7 +32,7 @@ namespace CarComparerAutomation
         {
             carComparerPage.goToComparator();
             
-            carComparerPage.CompareCars();
+            carComparerPage.CompareCars(new CarComparerBO());
             carComparerPage.CompareSelectedCars();
 
             var table_compare = carComparerPage.getComparer_Table();
@@ -47,13 +47,13 @@ namespace CarComparerAutomation
         {
             carComparerPage.goToComparator();
 
-            carComparerPage.CompareCars();
+            carComparerPage.CompareCars(new CarComparerBO());
             carComparerPage.CompareSelectedCars();
 
             var table_compare = carComparerPage.getComparer_Table();
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
             wait.Until(ExpectedConditions.ElementIsVisible(table_compare));
-            carComparerPage.Calculate();
+            carComparerPage.Calculate(new CarComparerBO());
             var table_calculator = carComparerPage.getCalculator_Table();
             wait.Until(ExpectedConditions.ElementIsVisible(table_calculator));
             Assert.IsTrue(carComparerPage.isVisibleComparer());
@@ -64,9 +64,8 @@ namespace CarComparerAutomation
         {
             carComparerPage.goToComparator();
 
-            carComparerPage.FailedCompareCars("Sport", "Lux");
-
-            carComparerPage.CompareCars();
+            carComparerPage.FailedCompareCars(new CarComparerBO());
+            carComparerPage.CompareSelectedCars();
 
             var table_compare = carComparerPage.getComparer_Table();
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
@@ -81,13 +80,13 @@ namespace CarComparerAutomation
         {
             carComparerPage.goToComparator();
 
-            carComparerPage.CompareCars();
+            carComparerPage.CompareCars(new CarComparerBO());
             carComparerPage.CompareSelectedCars();
 
             var table_compare = carComparerPage.getComparer_Table();
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
             wait.Until(ExpectedConditions.ElementIsVisible(table_compare));
-            carComparerPage.Negative_Calculate();
+            carComparerPage.Negative_Calculate(new CarComparerBO());
 
             string text = driver.SwitchTo().Alert().Text;
 

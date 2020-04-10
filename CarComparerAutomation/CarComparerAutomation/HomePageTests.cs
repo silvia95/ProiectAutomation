@@ -22,7 +22,7 @@ namespace CarComparerAutomation
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl("http://andrei.webdesign-iasi.ro/");
             setupLogin = new LoginPage(driver);
-            setupLogin.LoginApplication("admin", "123456");
+            setupLogin.LoginApplication(new LoginBO());
             homePage = new HomePage(driver);
         }
 

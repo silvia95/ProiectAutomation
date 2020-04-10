@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using CarComparerAutomation.PageObjects.Controllers;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace CarComparerAutomation.PageObjects
 
         private IWebElement buttonToList => driver.FindElement(By.Id("link_to_masini"));
 
+        //elemente pentru Detail Page
         private By buttonToList_by = By.Id("link_to_masini");
         public void goToDetailsPage()
         {
@@ -26,6 +28,7 @@ namespace CarComparerAutomation.PageObjects
             buttonToList.Click();
         }
 
+        //elementele din pagina Lista Masini
         private IWebElement details_table => driver.FindElement(By.Id("DataTables_Table_0_wrapper"));
 
         private By details_table_by = By.Id("DataTables_Table_0_wrapper");
@@ -39,32 +42,23 @@ namespace CarComparerAutomation.PageObjects
         private By btnEdit_by = By.ClassName("edit_model");
 
         private IList<IWebElement> LstCars => driver.FindElements(By.CssSelector("#DataTables_Table_0 tbody tr"));
-        
 
-        public void DeleteElement()
-        {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            wait.Until(ExpectedConditions.ElementIsVisible(details_table_by));
-            LstCars[1].FindElement(By.ClassName("delete_model")).Click();
-            wait.Until(ExpectedConditions.ElementIsVisible(btnDelete_by));
-            btnDelete.Click();
-            wait.Until(ExpectedConditions.AlertIsPresent());
-        }
+        //elemente pentru adaugarea unei masini
+        private IWebElement btnAdd => driver.FindElement(By.CssSelector(".btn_masini_adauga"));
+
+        private By btnAdd_by = By.CssSelector(".btn_masini_adauga");
+
+        private By modal_add_by = By.Id("modal_adaugare_editare");
 
         public void goToEditElement()
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             wait.Until(ExpectedConditions.ElementIsVisible(details_table_by));
             LstCars[1].FindElement(By.ClassName("edit_model")).Click();
-            //wait.Until(ExpectedConditions.ElementIsVisible(btnEdit_by));
-            //btnEdit.Click();
         }
 
-        private IWebElement btnAdd => driver.FindElement(By.CssSelector(".btn_masini_adauga"));
-
-        private By btnAdd_by = By.CssSelector(".btn_masini_adauga");
-
-        private By modal_add_by = By.Id("modal_adaugare_editare");
+        //element pentru download
+        private IWebElement btnDownloadPDF => driver.FindElement(By.ClassName("buttons-pdf"));
 
         // Pagina 1
         private IWebElement ddlProducator => driver.FindElement(By.Id("1_producator"));
@@ -123,12 +117,8 @@ namespace CarComparerAutomation.PageObjects
         private By Element_Pag4 = By.ClassName("temporar_5_siguranta");
         private By Element_Pag5 = By.ClassName("temporar_6_rca");
 
-        //elemente pentru download
-        private IWebElement btnDownloadPDF => driver.FindElement(By.ClassName("buttons-pdf"));
-
         
-
-        public void AddElement()
+        public void AddElement(CarDetailsBO add_data)
         {
             btnAdd.Click();
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
@@ -137,56 +127,56 @@ namespace CarComparerAutomation.PageObjects
 
             //Pagina 1
             var ddlProd = new SelectElement(ddlProducator);
-            ddlProd.SelectByText("Alfa Romeo");
-            txtModel.SendKeys("4C");
-            txtAn.SendKeys("2020");
-            txtPret.SendKeys("30000");
+            ddlProd.SelectByText(add_data.select_prod);
+            txtModel.SendKeys(add_data.text_model);
+            txtAn.SendKeys(add_data.text_anFabricatie);
+            txtPret.SendKeys(add_data.text_pret);
             chkLansat.Click();
-            txtDimMotor.SendKeys("6000");
+            txtDimMotor.SendKeys(add_data.text_dimMotor);
             var ddlTMotor = new SelectElement(ddlTipMotor);
-            ddlTMotor.SelectByText("Euro 4");
-            txtConsum.SendKeys("7");
+            ddlTMotor.SelectByText(add_data.select_TipMotor);
+            txtConsum.SendKeys(add_data.text_consum);
             var ddlCarb = new SelectElement(ddlCarburant);
-            ddlCarb.SelectByText("Benzină");
-            txtCutie.SendKeys("Automata");
-            txtTrepte.SendKeys("8");
-            txtCai.SendKeys("500");
-            txtCuplu.SendKeys("340");
-            txtSuspensie.SendKeys("Arcuri");
+            ddlCarb.SelectByText(add_data.select_Carburant);
+            txtCutie.SendKeys(add_data.text_TipCutie);
+            txtTrepte.SendKeys(add_data.text_trepte);
+            txtCai.SendKeys(add_data.text_Cai);
+            txtCuplu.SendKeys(add_data.text_Cuplu);
+            txtSuspensie.SendKeys(add_data.text_Suspensie);
             var ddlTurb = new SelectElement(ddlTurbina);
-            ddlTurb.SelectByText("Mono");
+            ddlTurb.SelectByText(add_data.select_Turbina);
             var ddlFar = new SelectElement(ddlFaruri);
-            ddlFar.SelectByText("LED");
+            ddlFar.SelectByText(add_data.select_Faruri);
             var ddlSenz = new SelectElement(ddlSenzori);
-            ddlSenz.SelectByText("Senzori complet");
-            txtGreutate.SendKeys("2000");
+            ddlSenz.SelectByText(add_data.select_Senzori);
+            txtGreutate.SendKeys(add_data.text_Greutate);
 
             btnContinua.Click();
             wait.Until(ExpectedConditions.ElementIsVisible(Element_Pag2));
 
             //Pagina 2
-            txtLungime.SendKeys("300");
-            txtLatime.SendKeys("140");
-            txtInaltime.SendKeys("100");
-            txtCap_Portbagaj.SendKeys("100");
+            txtLungime.SendKeys(add_data.text_Lungime);
+            txtLatime.SendKeys(add_data.text_Latime);
+            txtInaltime.SendKeys(add_data.text_Inaltime);
+            txtCap_Portbagaj.SendKeys(add_data.text_Portbagaj);
 
             btnContinua.Click();
             wait.Until(ExpectedConditions.ElementIsVisible(Element_Pag3));
 
             //Pagina 3
-            txtNrPortiere.SendKeys("8");
+            txtNrPortiere.SendKeys(add_data.text_Portiere);
             chkAerConditionat.Click();
             var ddlAerCond = new SelectElement(ddlTipAerCond);
-            ddlAerCond.SelectByText("Bizonal");
+            ddlAerCond.SelectByText(add_data.select_AerConditionat);
             chkComenziVolan.Click();
             chkCruiseControl.Click();
             var ddlRating = new SelectElement(ddlRatingSiguranta);
-            ddlRating.SelectByText("2 stele");
+            ddlRating.SelectByText(add_data.select_Rating);
             chkIncalzireaScaune.Click();
             chkComputerBord.Click();
             chkPlafonPanoramic.Click();
             var ddlTap = new SelectElement(ddlTapiterie);
-            ddlTap.SelectByText("Alcantara");
+            ddlTap.SelectByText(add_data.select_Tapiterie);
 
             btnContinua.Click();
             wait.Until(ExpectedConditions.ElementIsVisible(Element_Pag4));
@@ -202,15 +192,15 @@ namespace CarComparerAutomation.PageObjects
             wait.Until(ExpectedConditions.ElementIsVisible(Element_Pag5));
 
             //Pagina 5
-            txtRca20.SendKeys("1400");
-            txtRca40.SendKeys("8900");
-            txtRca60.SendKeys("1100");
+            txtRca20.SendKeys(add_data.text_RCA20);
+            txtRca40.SendKeys(add_data.text_RCA40);
+            txtRca60.SendKeys(add_data.text_RCA60);
 
             btnSalveaza.Click();
             wait.Until(ExpectedConditions.AlertIsPresent());
         }
 
-        public void EditElement()
+        public void EditElement(CarDetailsBO edit_data)
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
             wait.Until(ExpectedConditions.ElementIsVisible(modal_add_by));
@@ -218,76 +208,34 @@ namespace CarComparerAutomation.PageObjects
 
             //Pagina 1
             var ddlProd = new SelectElement(ddlProducator);
-            ddlProd.SelectByText("Alfa Romeo");
-            txtModel.SendKeys("4C");
-            txtAn.SendKeys("2020");
-            txtPret.SendKeys("30000");
-            chkLansat.Click();
-            txtDimMotor.SendKeys("6000");
-            var ddlTMotor = new SelectElement(ddlTipMotor);
-            ddlTMotor.SelectByText("Euro 4");
-            txtConsum.SendKeys("7");
-            var ddlCarb = new SelectElement(ddlCarburant);
-            ddlCarb.SelectByText("Benzină");
-            txtCutie.SendKeys("Automata");
-            txtTrepte.SendKeys("8");
-            txtCai.SendKeys("500");
-            txtCuplu.SendKeys("340");
-            txtSuspensie.SendKeys("Arcuri");
-            var ddlTurb = new SelectElement(ddlTurbina);
-            ddlTurb.SelectByText("Mono");
-            var ddlFar = new SelectElement(ddlFaruri);
-            ddlFar.SelectByText("LED");
-            var ddlSenz = new SelectElement(ddlSenzori);
-            ddlSenz.SelectByText("Senzori complet");
-            txtGreutate.SendKeys("2000");
+            
+            txtPret.Clear();
+            txtPret.SendKeys(edit_data.edit_Pret);
 
             btnContinua.Click();
             wait.Until(ExpectedConditions.ElementIsVisible(Element_Pag2));
-
-            //Pagina 2
-            txtLungime.SendKeys("300");
-            txtLatime.SendKeys("140");
-            txtInaltime.SendKeys("100");
-            txtCap_Portbagaj.SendKeys("100");
+            
 
             btnContinua.Click();
             wait.Until(ExpectedConditions.ElementIsVisible(Element_Pag3));
 
-            //Pagina 3
-            txtNrPortiere.SendKeys("8");
-            chkAerConditionat.Click();
-            var ddlAerCond = new SelectElement(ddlTipAerCond);
-            ddlAerCond.SelectByText("Bizonal");
-            chkComenziVolan.Click();
-            chkCruiseControl.Click();
-            var ddlRating = new SelectElement(ddlRatingSiguranta);
-            ddlRating.SelectByText("2 stele");
-            chkIncalzireaScaune.Click();
-            chkComputerBord.Click();
-            chkPlafonPanoramic.Click();
-            var ddlTap = new SelectElement(ddlTapiterie);
-            ddlTap.SelectByText("Alcantara");
-
             btnContinua.Click();
             wait.Until(ExpectedConditions.ElementIsVisible(Element_Pag4));
-
-            //Pagina 4
-            chkEsp.Click();
-            chkAbs.Click();
-            chkLaneAssist.Click();
-            chkBrakeAssist.Click();
-            chkAsistentaUpDown.Click();
 
             btnContinua.Click();
             wait.Until(ExpectedConditions.ElementIsVisible(Element_Pag5));
 
-            //Pagina 5
-            txtRca20.SendKeys("1400");
-            txtRca40.SendKeys("8900");
-            txtRca60.SendKeys("1100");
-
             btnSalveaza.Click();
+            wait.Until(ExpectedConditions.AlertIsPresent());
+        }
+
+        public void DeleteElement()
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            wait.Until(ExpectedConditions.ElementIsVisible(details_table_by));
+            LstCars[1].FindElement(By.ClassName("delete_model")).Click();
+            wait.Until(ExpectedConditions.ElementIsVisible(btnDelete_by));
+            btnDelete.Click();
             wait.Until(ExpectedConditions.AlertIsPresent());
         }
 
@@ -318,6 +266,7 @@ namespace CarComparerAutomation.PageObjects
             return exist;
         }
 
+        //metode pe check users rights
         public bool Element_Exist()
         {
             return btnAdd.Displayed;

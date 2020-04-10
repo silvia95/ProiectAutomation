@@ -9,12 +9,13 @@ namespace CarComparerAutomation.PageObjects
     {
 
         private IWebDriver driver;
-        private By car_selector_container => By.ClassName("comparator-selector");
+        
         public CarComparerPage(IWebDriver browser)
         {
             driver = browser;
         }
 
+        private By car_selector_container => By.ClassName("comparator-selector");
         private IWebElement buttonToComparator => driver.FindElement(By.ClassName("btnComparator"));
 
         // elementele de tip selector pentru cele 8 ddl
@@ -43,19 +44,14 @@ namespace CarComparerAutomation.PageObjects
         private IWebElement chkRovinieta => driver.FindElement(By.Id("rovinieta"));
         private IWebElement ddlNrAni => driver.FindElement(By.Id("ani_calcul"));
         private IWebElement btnCalculeaza => driver.FindElement(By.ClassName("btn-calculator-apply"));
-
-        private IWebElement BtnComparaMasini()
-        {
-            return driver.FindElement(By.ClassName("btn-compara"));
-        }
-
-        private IWebElement comparer_table => driver.FindElement(By.ClassName("comparator-container"));
-
-        private By comparer_table_by = By.ClassName("comparator-container");
-
         private IWebElement RezultateCalc => driver.FindElement(By.ClassName("calculator_rezultate"));
 
         private By RezultateCalc_by = By.ClassName("calculator_rezultate");
+
+        //elemente pentru comparator
+        private IWebElement comparer_table => driver.FindElement(By.ClassName("comparator-container"));
+
+        private By comparer_table_by = By.ClassName("comparator-container");
 
         public By getComparer_Table()
         {
@@ -67,67 +63,70 @@ namespace CarComparerAutomation.PageObjects
             return RezultateCalc_by;
         }
 
+        public void Calculate(CarComparerBO calculate_data)
+        {
+            txtKmAn.SendKeys(calculate_data.text_KmAn);
+            txtCombustibil.SendKeys(calculate_data.text_Combustibil);
+            txtVarsta.SendKeys(calculate_data.text_Varsta);
+            chkRovinieta.Click();
+            ddlNrAni.Click();
+            ddlNrAni.FindElement(By.CssSelector(calculate_data.select_NrAni));
+            btnCalculeaza.Click();
+        }
+
+        public void Negative_Calculate(CarComparerBO calculate_data)
+        {
+            txtCombustibil.SendKeys(calculate_data.text_Combustibil);
+            txtVarsta.SendKeys(calculate_data.text_Varsta);
+            chkRovinieta.Click();
+            ddlNrAni.Click();
+            ddlNrAni.FindElement(By.CssSelector(calculate_data.select_NrAni));
+            btnCalculeaza.Click();
+        }
+
+        private IWebElement BtnComparaMasini()
+        {
+            return driver.FindElement(By.ClassName("btn-compara"));
+        }
+
         public void goToComparator()        {            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));            wait.Until(ExpectedConditions.ElementIsVisible(btnToComparator));            buttonToComparator.Click();        }
 
-
-        public void FailedCompareCars(string s_clasa_1, string s_clasa_2)
+        public void FailedCompareCars(CarComparerBO comparer_data)
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             wait.Until(ExpectedConditions.ElementIsVisible(car_selector_container));
-            var select_class_1 = new SelectElement(clasa_1);
-            select_class_1.SelectByText(s_clasa_1);
-            var select_class_2 = new SelectElement(clasa_2);
-            select_class_2.SelectByText(s_clasa_2);
+            clasa_1.Click();
+            clasa_1.FindElement(By.CssSelector(comparer_data.select_clasa1)).Click();
+            clasa_2.Click();
+            clasa_2.FindElement(By.CssSelector(comparer_data.select_clasa2)).Click();
         }
 
-
-        public void CompareCars()
+        public void CompareCars(CarComparerBO comparer_data)
         {
             clasa_1.Click();
-            clasa_1.FindElement(By.CssSelector("option[value='1']")).Click();
+            clasa_1.FindElement(By.CssSelector(comparer_data.select_clasa1)).Click();
 
             subclasa_1.Click();
-            subclasa_1.FindElement(By.CssSelector("option[value='1']")).Click();
+            subclasa_1.FindElement(By.CssSelector(comparer_data.select_subclasa1)).Click();
 
             producator_1.Click();
-            producator_1.FindElement(By.CssSelector("option[value='2']")).Click();
+            producator_1.FindElement(By.CssSelector(comparer_data.select_producator1)).Click();
 
             model_1.Click();
-            model_1.FindElement(By.CssSelector("option[value='41']")).Click();
+            model_1.FindElement(By.CssSelector(comparer_data.select_model1)).Click();
 
             clasa_2.Click();
-            clasa_2.FindElement(By.CssSelector("option[value='1']")).Click();
+            clasa_2.FindElement(By.CssSelector(comparer_data.select_clasa2)).Click();
 
             subclasa_2.Click();
-            subclasa_2.FindElement(By.CssSelector("option[value='1']")).Click();
+            subclasa_2.FindElement(By.CssSelector(comparer_data.select_subclasa2)).Click();
 
             producator_2.Click();
-            producator_2.FindElement(By.CssSelector("option[value='2']")).Click();
+            producator_2.FindElement(By.CssSelector(comparer_data.select_producator2)).Click();
 
             model_2.Click();
-            model_2.FindElement(By.CssSelector("option[value='44']")).Click();
+            model_2.FindElement(By.CssSelector(comparer_data.select_model2)).Click();
             
-        }
-
-        public void Calculate()
-        {
-            txtKmAn.SendKeys("15000");
-            txtCombustibil.SendKeys("5");
-            txtVarsta.SendKeys("30");
-            chkRovinieta.Click();
-            ddlNrAni.Click();
-            ddlNrAni.FindElement(By.CssSelector("option[value='3']"));
-            btnCalculeaza.Click();
-        }
-
-        public void Negative_Calculate()
-        {
-            txtCombustibil.SendKeys("5");
-            txtVarsta.SendKeys("30");
-            chkRovinieta.Click();
-            ddlNrAni.Click();
-            ddlNrAni.FindElement(By.CssSelector("option[value='3']"));
-            btnCalculeaza.Click();
         }
 
         public void CompareSelectedCars()

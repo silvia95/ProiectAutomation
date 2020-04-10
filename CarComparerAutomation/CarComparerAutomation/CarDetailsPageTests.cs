@@ -1,9 +1,11 @@
 ﻿using CarComparerAutomation.PageObjects;
+using CarComparerAutomation.PageObjects.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.IO;
+using System.Threading;
 
 namespace CarComparerAutomation
 {
@@ -22,7 +24,7 @@ namespace CarComparerAutomation
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl("http://andrei.webdesign-iasi.ro/");
             setupLogin = new LoginPage(driver);
-            setupLogin.LoginApplication("admin", "123456");
+            setupLogin.LoginApplication(new LoginBO(), "admin");
         }
 
         [TestMethod]
@@ -40,7 +42,7 @@ namespace CarComparerAutomation
         public void Add_Car()
         {
             carDetailsPage.goToDetailsPage();
-            carDetailsPage.AddElement();
+            carDetailsPage.AddElement(new CarDetailsBO());
 
             string text = driver.SwitchTo().Alert().Text;
 
@@ -52,7 +54,7 @@ namespace CarComparerAutomation
         {
             carDetailsPage.goToDetailsPage();
             carDetailsPage.goToEditElement();
-            carDetailsPage.EditElement();
+            carDetailsPage.EditElement(new CarDetailsBO());
 
             string text = driver.SwitchTo().Alert().Text;
 
@@ -68,7 +70,11 @@ namespace CarComparerAutomation
             if (carDetailsPage.Element_Exist())
             {
                 setupLogin.user_logout();
-                setupLogin.LoginApplication("test", "123456");
+                //folosind wait-ul functioneaza in medie in 4 din 5 cazuri
+                //folosind thread.sleep functioneaza in 5 din 5 cazuri 
+                //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+                Thread.Sleep(5000);
+                setupLogin.LoginApplication(new LoginBO(), "test");
                 carDetailsPage.goToDetailsPage();
                 if (!carDetailsPage.Element_Exist())
                 {
@@ -89,7 +95,10 @@ namespace CarComparerAutomation
             carDetailsPage.goToDetailsPage();
             carDetailsPage.Download_Car_Details();
 
-            System.Threading.Thread.Sleep(5000);
+            //ar trebui sa asteptam o scurta perioada pentru a se finaliza descarcarea
+            Thread.Sleep(5000);
+            //cu implicit wait nu functioneaza precum thread.sleep
+            //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             Assert.AreEqual(true, carDetailsPage.CheckFileDownloaded("Lista_masini"));
         }
 
